@@ -76,6 +76,10 @@ public class DrawDisplayFragment extends Fragment {
         TableLayout tableLayout = (TableLayout) rootView.findViewById(R.id.tableLayoutScores);
         // Check if there are any games to display for this week.
         if (!games.isEmpty()) {
+            TextView textViewHelp = new TextView(this.getActivity());
+            textViewHelp.setText("Tap division titles to expand and contract");
+            textViewHelp.setTextSize(20);
+            tableLayout.addView(textViewHelp);
             // Group the games in each division together by adding games in order
             // based on which division they are in.
             for (int i = 0; i < DrawFragmentActivity.divisions.size(); i += 1) {
@@ -108,6 +112,21 @@ public class DrawDisplayFragment extends Fragment {
                         // all the game info from the database.
                         final TextView textViewGameID = (TextView) tableRow.findViewById(R.id.textViewGameID);
                         textViewGameID.setText(String.valueOf(g.getGameID()));
+                        // Set ref name
+                        if (!g.getRef().equals("")) {
+                            TextView textViewRef = (TextView) tableRow.findViewById(R.id.textViewRef);
+                            textViewRef.setText("Ref: " + g.getRef());
+                        }
+                        if (!g.getAssRef1().equals("")) {
+                            // Set assistant ref 1 name
+                            TextView textViewAssRef1 = (TextView) tableRow.findViewById(R.id.textViewAssRef1);
+                            textViewAssRef1.setText("Assistant Refs: " + g.getAssRef1());
+                        }
+                        if (!g.getAssRef2().equals("")) {
+                            // Set assistant ref 2 name
+                            TextView textViewAssRef2 = (TextView) tableRow.findViewById(R.id.textViewAssRef2);
+                            textViewAssRef2.setText(" and " + g.getAssRef2());
+                        }
                         // Set home team name
                         TextView textViewHomeName = (TextView) tableRow.findViewById(R.id.textViewHomeName);
                         textViewHomeName.setText(g.getHomeTeamName());
@@ -150,6 +169,7 @@ public class DrawDisplayFragment extends Fragment {
                         tableLayoutScores.addView(tableRow);
                     }
                 }
+                if (tableLayoutScores.getChildCount() == 0) { divTitle.setVisibility(View.GONE); }
                 tableLayout.addView(tableLayoutScores);
             }
         } else {
@@ -157,6 +177,7 @@ public class DrawDisplayFragment extends Fragment {
             TextView textViewNoGames = (TextView) rootView.findViewById(R.id.textViewNoGames);
             textViewNoGames.setVisibility(View.VISIBLE);
             textViewNoGames.setText("No Games to display");
+            textViewNoGames.setTextSize(22);
         }
         return rootView;
     }
@@ -263,7 +284,8 @@ public class DrawDisplayFragment extends Fragment {
                         }
                         // Create Game from retrieved info and add it to games ArrayList
                         games.add(new Game(json.getLong("GameID"), json.getString("homeTeamName"), json.getInt("homeTeamScore"),
-                                json.getString("awayTeamName"), json.getInt("awayTeamScore"), json.getString("location"),
+                                json.getString("awayTeamName"), json.getInt("awayTeamScore"), json.getString("ref"),
+                                json.getString("assRef1"), json.getString("assRef2"), json.getString("location"),
                                 json.getInt("minutesPlayed"), json.getString("time"), scoringPlays));
                     }
                 }

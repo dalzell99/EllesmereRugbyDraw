@@ -29,7 +29,7 @@ public class DrawPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a DrawDisplayFragment with the page number as its lone argument.
+        // Return a DrawDisplayFragment
         weekNumber = position;
         return new DrawDisplayFragment();
     }
@@ -78,7 +78,6 @@ public class DrawPagerAdapter extends FragmentPagerAdapter {
                         "Aug", "Sep", "Oct", "Nov", "Dec").get(calendar.get(Calendar.MONTH) - 1);
 
         calendar.add(Calendar.DAY_OF_MONTH, -(6 + 7 * position));
-
 
         return "Week " + String.valueOf(position + 1) + " (" + startDate + " - " + endDate + ")";
     }

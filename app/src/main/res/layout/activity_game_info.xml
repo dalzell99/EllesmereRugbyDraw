@@ -60,13 +60,27 @@
             android:textColor="#FF33B5E5"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/textViewGameInfoMinutes"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:textSize="15sp"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewGameInfoMinutes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewGameInfoDate"
+                android:gravity="center_horizontal"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textViewGameInfoAwayScore"
@@ -79,7 +93,6 @@
             android:textStyle="bold"/>
 
     </LinearLayout>
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

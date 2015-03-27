@@ -16,11 +16,14 @@ public class Game {
     String location;
     int minutesPlayed;
     String time;
+    String ref;
+    String assRef1;
+    String assRef2;
     ArrayList<ScoringPlay> scoringPlays;
 
     public Game(long gameID, String homeTeamName, int homeTeamScore, String awayTeamName,
-                int awayTeamScore, String location, int minutesPlayed, String time,
-                ArrayList<ScoringPlay> scoringPlays) {
+                int awayTeamScore, String ref, String assRef1, String assRef2, String location,
+                int minutesPlayed, String time, ArrayList<ScoringPlay> scoringPlays) {
         this.gameID = gameID;
         this.homeTeamName = homeTeamName;
         this.homeTeamScore = homeTeamScore;
@@ -30,6 +33,9 @@ public class Game {
         this.minutesPlayed = minutesPlayed;
         this.time = time;
         this.scoringPlays = scoringPlays;
+        this.ref = ref;
+        this.assRef1 = assRef1;
+        this.assRef2 = assRef2;
     }
 
     public ArrayList<ScoringPlay> getScoringPlays() {
@@ -76,6 +82,30 @@ public class Game {
         return startTime;
     }
 
+    public String getDate() {
+        String dateString = "";
+        String today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+        // Check if game is being played today.
+        if (String.valueOf(gameID).substring(0, 8).equals(today.substring(0, 8))) {
+            dateString += "Today ";
+        } else {
+            try {
+                Date date = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(gameID).substring(0, 8));
+                dateString += new SimpleDateFormat("EE").format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dateString += " ";
+            dateString += String.valueOf(gameID).substring(6, 8);
+            dateString += " ";
+            dateString += Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+                    "Aug", "Sep", "Oct", "Nov", "Dec").get(Integer.parseInt(String.valueOf(gameID).substring(4, 6)) - 1);
+            dateString += " ";
+        }
+
+        return dateString;
+    }
+
     public String getHomeTeamName() {
         return homeTeamName;
     }
@@ -91,4 +121,10 @@ public class Game {
     public int getAwayTeamScore() {
         return awayTeamScore;
     }
+
+    public String getRef() { return ref; }
+
+    public String getAssRef1() { return assRef1; }
+
+    public String getAssRef2() { return assRef2; }
 }

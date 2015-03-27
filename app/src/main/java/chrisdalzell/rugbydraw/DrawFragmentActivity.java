@@ -36,7 +36,8 @@ public class DrawFragmentActivity extends FragmentActivity {
     public static String SERVER_ADDRESS = "http://www.possumpam.com/rugby-scoring-app-scripts/";
 
     // Data to be used for Division titles
-    public static List<String> divisions = Arrays.asList("Div 1", "Div 2", "Div 3", "Colts", "U18", "U16", "U14.5", "U13", "U11.5");
+    public static List<String> divisions = Arrays.asList("Div 1", "Women", "Div 2", "Div 3", "Colts",
+            "U18", "U16", "U14.5", "U13", "U11.5", "U10", "U8.5", "U7");
 
     /**
      * Sets the date for the start of the season. This is used for displaying
@@ -127,6 +128,14 @@ public class DrawFragmentActivity extends FragmentActivity {
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+        // Get todays date, add 1 month todays date (Gregorian calendars months are not zero indexed),
+        // calculate difference in milliseconds and convert to weeks and set viewpager to that index.
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.MONTH, today.get(Calendar.MONTH) + 1);
+        long c = today.getTimeInMillis() - startFirstWeek.getTimeInMillis();
+        int weeks = (int) c / (1000 * 60 * 60 * 24 * 7);
+        mViewPager.setCurrentItem(weeks, true);
     }
 
     // Retrieves all the games from the database
@@ -164,7 +173,7 @@ public class DrawFragmentActivity extends FragmentActivity {
                 if (!result.equals("")) {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        ArrayList<ScoringPlay> scoringPlays = new ArrayList<ScoringPlay>();
+                        ArrayList<ScoringPlay> scoringPlays = new ArrayList<>();
                         JSONObject json = jsonArray.getJSONObject(i);
                         // Retrieve String containing JSONArray of JSONArrays each containing
                         // minutesPlayed, play and description
@@ -181,7 +190,8 @@ public class DrawFragmentActivity extends FragmentActivity {
                         }
                         // Create Game from retrieved info and add it to games ArrayList
                         games.add(new Game(json.getLong("GameID"), json.getString("homeTeamName"), json.getInt("homeTeamScore"),
-                                json.getString("awayTeamName"), json.getInt("awayTeamScore"), json.getString("location"),
+                                json.getString("awayTeamName"), json.getInt("awayTeamScore"), json.getString("ref"),
+                                json.getString("assRef1"), json.getString("assRef2"), json.getString("location"),
                                 json.getInt("minutesPlayed"), json.getString("time"), scoringPlays));
                     }
                 }

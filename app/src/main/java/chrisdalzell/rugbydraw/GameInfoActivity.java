@@ -39,6 +39,7 @@ public class GameInfoActivity extends FragmentActivity {
     TextView textViewGameInfoHomeScore;
     TextView textViewGameInfoAwayScore;
     TextView textViewGameInfoMinutes;
+    TextView textViewGameInfoDate;
     SwipeRefreshLayout swipeLayout;
     int homeScore = 0;
     int awayScore = 0;
@@ -76,6 +77,7 @@ public class GameInfoActivity extends FragmentActivity {
         textViewGameInfoHomeScore = (TextView) findViewById(R.id.textViewGameInfoHomeScore);
         textViewGameInfoAwayScore = (TextView) findViewById(R.id.textViewGameInfoAwayScore);
         textViewGameInfoMinutes = (TextView) findViewById(R.id.textViewGameInfoMinutes);
+        textViewGameInfoDate = (TextView) findViewById(R.id.textViewGameInfoDate);
 
         homeScore = 0;
         awayScore = 0;
@@ -88,9 +90,11 @@ public class GameInfoActivity extends FragmentActivity {
         textViewGameInfoHomeScore.setText(String.valueOf(game.getHomeTeamScore()));
         textViewGameInfoAwayScore.setText(String.valueOf(game.getAwayTeamScore()));
         if (game.getMinutesPlayed() == 0) {
-            textViewGameInfoMinutes.setText(game.getStartTime());
+            textViewGameInfoMinutes.setText(game.getTime());
+            textViewGameInfoDate.setText(game.getDate());
         } else {
             textViewGameInfoMinutes.setText(String.valueOf(game.getMinutesPlayed()) + "mins");
+            textViewGameInfoDate.setVisibility(View.GONE);
         }
         ArrayList<ScoringPlay> scoringPlays = game.getScoringPlays();
 
@@ -240,7 +244,8 @@ public class GameInfoActivity extends FragmentActivity {
                         }
                         // Create Game from retrieved info and add it to games ArrayList
                         games.add(new Game(json.getLong("GameID"), json.getString("homeTeamName"), json.getInt("homeTeamScore"),
-                                json.getString("awayTeamName"), json.getInt("awayTeamScore"), json.getString("location"),
+                                json.getString("awayTeamName"), json.getInt("awayTeamScore"), json.getString("ref"),
+                                json.getString("assRef1"), json.getString("assRef2"), json.getString("location"),
                                 json.getInt("minutesPlayed"), json.getString("time"), scoringPlays));
                     }
                 }
