@@ -51,8 +51,8 @@ public class DrawPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        // Show 7 total pages.
-        return 7;
+        // Show 18 total pages.
+        return 18;
     }
 
     /**

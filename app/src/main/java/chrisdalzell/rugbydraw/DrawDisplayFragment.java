@@ -47,7 +47,7 @@ public class DrawDisplayFragment extends Fragment {
     // Returns view to be displayed in viewpager
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_game_display, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_draw_display, container, false);
 
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -64,11 +64,20 @@ public class DrawDisplayFragment extends Fragment {
                     // Update games if connected to internet
                     updateGames();
                 }
-
-                // Stop the refresh animation
-                swipeLayout.setRefreshing(false);
             }
         });
+
+        /**
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Stop the refresh animation
+                swipeLayout.setRefreshing(false);
+                displayToast("Swipe to update has been disabled.");
+            }
+        });
+         */
 
         // Get all games being played in this week
         ArrayList<Game> games = getThisWeeksGames(weekNumber);
@@ -76,17 +85,51 @@ public class DrawDisplayFragment extends Fragment {
         TableLayout tableLayout = (TableLayout) rootView.findViewById(R.id.tableLayoutScores);
         // Check if there are any games to display for this week.
         if (!games.isEmpty()) {
+            String message = "Tap division titles to expand and contract";
+
+            // Add notice of club days to top of draw
+            switch (weekNumber) {
+                case 3:
+                    message += "\nClub Days: Hornby and Lincoln";
+                    break;
+                case 5:
+                    message += "\nClub Days: West Melton, Burnham and Prebbleton";
+                    break;
+                case 6:
+                    message += "\nClub Days: Darfield and Rolleston";
+                    break;
+                case 7:
+                    message += "\nClub Days: Southbridge and Waihora";
+                    break;
+                case 8:
+                    message += "\nClub Days: Dunsandel and Selwyn";
+                    break;
+                case 9:
+                    message += "\nClub Day: Diamond Harbour";
+                    break;
+                case 10:
+                    message += "\nClub Days: Kirwee and Banks Peninsula";
+                    break;
+                case 11:
+                    message += "\nClub Days: Leeston and Springston";
+                    break;
+                case 12:
+                    message += "\nClub Day: Sheffield";
+                    break;
+            }
+
             TextView textViewHelp = new TextView(this.getActivity());
-            textViewHelp.setText("Tap division titles to expand and contract");
+            textViewHelp.setText(message);
             textViewHelp.setTextSize(20);
             tableLayout.addView(textViewHelp);
+
             // Group the games in each division together by adding games in order
             // based on which division they are in.
-            for (int i = 0; i < DrawFragmentActivity.divisions.size(); i += 1) {
+            for (int i = 0; i < MainActivity.divisions.size(); i += 1) {
                 // Add division title
                 View divTitle = inflater.inflate(R.layout.result_division_title, container, false);
                 TextView textViewDivTitle = (TextView) divTitle.findViewById(R.id.textViewDivTitle);
-                textViewDivTitle.setText(DrawFragmentActivity.divisions.get(i));
+                textViewDivTitle.setText(MainActivity.divisions.get(i));
                 tableLayout.addView(divTitle);
 
                 final TableLayout tableLayoutScores = new TableLayout(this.getActivity());
@@ -203,7 +246,7 @@ public class DrawDisplayFragment extends Fragment {
         calendar.add(Calendar.DAY_OF_MONTH, -(6 + 7 * weekNumber));
 
         // loop through games and find ones with dates between start and end dates
-        for (Game g : DrawFragmentActivity.games) {
+        for (Game g : MainActivity.games) {
             // Extract date from gameID by converting to string, get a substring of first
             // 8 characters (YYYYMMDD) then convert back to int to be compared.
             int gameIDDate = Integer.parseInt(String.valueOf(g.getGameID()).substring(0,8));
@@ -225,11 +268,11 @@ public class DrawDisplayFragment extends Fragment {
 
     // Displays a toast with passed in message
     private void displayToast(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     private void updateGames() {
-        new GetAllGames().execute(DrawFragmentActivity.SERVER_ADDRESS + "get_all_games.php");
+        new GetAllGames().execute(MainActivity.SERVER_ADDRESS + "get_all_games.php");
     }
 
     // Retrieves all the games from the database
@@ -237,7 +280,7 @@ public class DrawDisplayFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object[] objects) {
-            ArrayList<Game> games = new ArrayList<>();
+            ArrayList<Game> games = new ArrayList<Game>();
             String result = "";
 
             try {
@@ -267,7 +310,7 @@ public class DrawDisplayFragment extends Fragment {
                 if (!result.equals("")) {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        ArrayList<ScoringPlay> scoringPlays = new ArrayList<>();
+                        ArrayList<ScoringPlay> scoringPlays = new ArrayList<ScoringPlay>();
                         JSONObject json = jsonArray.getJSONObject(i);
                         // Retrieve String containing JSONArray of JSONArrays each containing
                         // minutesPlayed, play and description
@@ -294,15 +337,23 @@ public class DrawDisplayFragment extends Fragment {
             }
 
             // Return ArrayList with every game stored in database
-            DrawFragmentActivity.games = games;
+            MainActivity.games = games;
 
             return null;
         }
 
         @Override
         protected void onPostExecute(Object o) {
-            // Tell pager adapter to recreate fragments with new data
-            DrawFragmentActivity.mDrawPagerAdapter.notifyDataSetChanged();
+            // Stop the refresh animation
+            swipeLayout.setRefreshing(false);
+            // Update workaround because getActivity.recreate() and
+            // DrawFragmentActivity.mDrawPagerAdapter.notifyDataSetChanged() are acting strangely
+            // The MyTeamsActivity is started then the DrawFragmentActivity is started immediately
+            // from the onCreate of MyTeamsActivity.
+            Intent intent = new Intent(getActivity(), MyTeamsActivity.class);
+            intent.putExtra("refresh", true);
+            intent.putExtra("weekNumber", weekNumber);
+            startActivity(intent);
             // Display toast informing user that all games have been updated
             displayToast("Games Updated");
         }

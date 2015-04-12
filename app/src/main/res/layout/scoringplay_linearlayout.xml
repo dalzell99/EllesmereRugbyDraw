@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -17,10 +16,9 @@
             android:layout_weight="1"
             android:id="@+id/textViewHomePlay"
             android:gravity="left"
-            android:textSize="18sp"
+            android:textSize="@dimen/scoringplay_text_size"
             android:textStyle="bold"
-            android:paddingLeft="8dp"
-            tools:ignore="RtlSymmetry"/>
+            android:paddingLeft="8dp"/>
 
         <TextView
             android:layout_width="0dp"
@@ -28,9 +26,9 @@
             android:layout_weight="1"
             android:id="@+id/textViewMinutes"
             android:gravity="center_horizontal"
-            android:textSize="20sp"
+            android:textSize="@dimen/minutes_text_size"
             android:textStyle="bold"
-            android:textColor="#FF33B5E5"/>
+            android:textColor="@color/light_blue"/>
 
         <TextView
             android:layout_width="0dp"
@@ -38,10 +36,9 @@
             android:layout_weight="1"
             android:id="@+id/textViewAwayPlay"
             android:gravity="right"
-            android:textSize="18sp"
+            android:textSize="@dimen/scoringplay_text_size"
             android:textStyle="bold"
-            android:paddingRight="8dp"
-            tools:ignore="RtlSymmetry"/>
+            android:paddingRight="8dp"/>
     </TableRow>
 
     <TableRow
@@ -54,12 +51,13 @@
             android:layout_weight="1"
             android:id="@+id/textViewPlayDescription"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:paddingRight="8dp"
+            android:textSize="@dimen/description_scoringplay_text_size"/>
     </TableRow>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#D3D3D3"
+        android:background="@color/light_grey"
         android:layout_marginTop="8dp"/>
 </LinearLayout>

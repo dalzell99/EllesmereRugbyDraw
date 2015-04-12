@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="12dp"
         android:layout_height="2dp"
-        android:background="#CBCBCB"/>
+        android:background="@color/light_grey"/>
 
     <TableRow
         android:layout_width="match_parent"
@@ -25,23 +25,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dunsandel Domain"
             android:id="@+id/textViewLocation"
-            android:textColor="#193480"/>
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/gameinfo_drawdisplay_text_size"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" - "
             android:id="@+id/textView2"
-            android:textColor="#193480"/>
+            android:text=" - "
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/gameinfo_drawdisplay_text_size"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2:30pm"
             android:id="@+id/textViewTime"
-            android:textColor="#193480"/>
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/gameinfo_drawdisplay_text_size"/>
     </TableRow>
 
     <TableRow
@@ -54,21 +55,21 @@
             android:layout_weight="1"
             android:id="@+id/textViewRef"
             android:textSize="@dimen/text_size_ref"
-            android:textColor="#193480"/>
+            android:textColor="@color/dark_blue"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewAssRef1"
             android:textSize="@dimen/text_size_ref"
-            android:textColor="#193480"/>
+            android:textColor="@color/dark_blue"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewAssRef2"
             android:textSize="@dimen/text_size_ref"
-            android:textColor="#193480"/>
+            android:textColor="@color/dark_blue"/>
     </TableRow>
 
     <TableRow
@@ -78,19 +79,17 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Dunsandel/Irwell/Burnham"
             android:id="@+id/textViewHomeName"
-            android:layout_weight="4"/>
+            android:layout_weight="4"
+            android:textSize="@dimen/teamnamescore_drawdisplay_text_size"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="25"
             android:id="@+id/textViewHomeScore"
             android:layout_weight="1"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:textSize="@dimen/teamnamescore_drawdisplay_text_size"/>
 
     </TableRow>
 
@@ -101,19 +100,17 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Lincoln"
             android:id="@+id/textViewAwayName"
-            android:layout_weight="4"/>
+            android:layout_weight="4"
+            android:textSize="@dimen/teamnamescore_drawdisplay_text_size"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="12"
             android:id="@+id/textViewAwayScore"
             android:layout_weight="1"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:textSize="@dimen/teamnamescore_drawdisplay_text_size"/>
     </TableRow>
 
 </LinearLayout>

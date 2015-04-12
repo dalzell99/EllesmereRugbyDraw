@@ -1,9 +1,31 @@
 <resources>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="spinner_text_size">20sp</dimen>
-    <dimen name="spinner_item_height">40dp</dimen>
-    <dimen name="scoring_play_button_height">25dp</dimen>
-    <dimen name="scoring_play_button_text_size">13sp</dimen>
+    <!-- Splash Screen -->
+    <dimen name="title_main_activity_text_size">50sp</dimen>
+    <dimen name="activity_horizontal_margin">12dp</dimen>
+    <dimen name="activity_vertical_margin">12dp</dimen>
+
+    <!-- Division Title Layout -->
     <dimen name="div_title_text_size">27sp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_title_size">15sp</dimen>
+    <dimen name="toolbar_button_text_size">15sp</dimen>
+
+    <!-- GameInfoActivity -->
+    <dimen name="team_gameinfo_text_size">15sp</dimen>
+    <dimen name="score_gameinfo_text_size">20sp</dimen>
+    <dimen name="time_gameinfo_text_size">12sp</dimen>
+
+    <!-- Game Info Layout -->
+    <dimen name="gameinfo_drawdisplay_text_size">10sp</dimen>
+    <dimen name="text_size_ref">8sp</dimen>
+    <dimen name="teamnamescore_drawdisplay_text_size">15sp</dimen>
+
+    <!-- Scoring play Layout -->
+    <dimen name="scoringplay_text_size">13sp</dimen>
+    <dimen name="minutes_text_size">16sp</dimen>
+    <dimen name="description_scoringplay_text_size">11sp</dimen>
+
+    <!-- Team Selection tablerow layout -->
+    <dimen name="team_name_text_size">20sp</dimen>
 </resources>

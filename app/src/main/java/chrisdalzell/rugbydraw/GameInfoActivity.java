@@ -114,6 +114,15 @@ public class GameInfoActivity extends FragmentActivity {
                 TextView textViewMinutes = (TextView) linearLayout.findViewById(R.id.textViewMinutes);
                 textViewMinutes.setText(String.valueOf(homeScore) + "-" + String.valueOf(awayScore) +
                         "\nFull Time");
+            } else if (scoringPlay.contains("strt")) {
+                TextView textViewMinutes = (TextView) linearLayout.findViewById(R.id.textViewMinutes);
+                textViewMinutes.setText(String.valueOf(homeScore) + "-" + String.valueOf(awayScore) +
+                        "\nGame Started");
+            } else if (scoringPlay.contains("updt")) {
+                changeScore(scoringPlay);
+                TextView textViewMinutes = (TextView) linearLayout.findViewById(R.id.textViewMinutes);
+                textViewMinutes.setText(String.valueOf(homeScore) + "-" + String.valueOf(awayScore) +
+                        "\nScore Updated");
             } else {
                 String team = scoringPlay.substring(0, 4);
                 String play = scoringPlay.substring(4, scoringPlay.length());
@@ -151,6 +160,12 @@ public class GameInfoActivity extends FragmentActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    // Changes the scores based on a score update
+    private void changeScore(String scoringPlay) {
+        homeScore = Integer.parseInt(scoringPlay.substring(4,6));
+        awayScore = Integer.parseInt(scoringPlay.substring(6,8));
+    }
+
     // Update score based on team and scoring play
     private void changeScore(String team, String play) {
         if (play.equals("Try")) {
@@ -178,10 +193,12 @@ public class GameInfoActivity extends FragmentActivity {
     private Game getGameInfo() {
         Game result = null;
 
+        ArrayList<Game> games = MainActivity.games;
+
         // Iterate through all games until matching gameID is found
-        for (int i = 0; i < DrawFragmentActivity.games.size(); i++) {
-            if (DrawFragmentActivity.games.get(i).getGameID() == Long.parseLong(gameID)) {
-                result = DrawFragmentActivity.games.get(i);
+        for (int i = 0; i < games.size(); i++) {
+            if (games.get(i).getGameID() == Long.parseLong(gameID)) {
+                result = games.get(i);
             }
         }
 
@@ -189,7 +206,7 @@ public class GameInfoActivity extends FragmentActivity {
     }
 
     private void updateGames() {
-        new GetAllGames().execute(DrawFragmentActivity.SERVER_ADDRESS + "get_all_games.php");
+        new GetAllGames().execute(MainActivity.SERVER_ADDRESS + "get_all_games.php");
     }
 
     // Retrieves all the games from the database
@@ -254,7 +271,7 @@ public class GameInfoActivity extends FragmentActivity {
             }
 
             // Return ArrayList with every game stored in database
-            DrawFragmentActivity.games = games;
+            MainActivity.games = games;
 
             return null;
         }

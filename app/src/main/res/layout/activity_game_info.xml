@@ -21,14 +21,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_horizontal"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/team_gameinfo_text_size"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:textSize="20sp"
+            android:textSize="@dimen/team_gameinfo_text_size"
             android:text="vs"/>
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_horizontal"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/team_gameinfo_text_size"/>
 
     </LinearLayout>
 
@@ -56,8 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_horizontal"
-            android:textSize="30sp"
-            android:textColor="#FF33B5E5"
+            android:textSize="@dimen/score_gameinfo_text_size"
+            android:textColor="@color/light_blue"
             android:textStyle="bold"/>
 
         <LinearLayout
@@ -70,14 +70,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
-                android:textSize="15sp" />
+                android:textSize="@dimen/time_gameinfo_text_size"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/textViewGameInfoDate"
                 android:gravity="center_horizontal"
-                android:textSize="15sp" />
+                android:textSize="@dimen/time_gameinfo_text_size"/>
 
         </LinearLayout>
 
@@ -88,11 +88,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_horizontal"
-            android:textSize="30sp"
+            android:textSize="@dimen/score_gameinfo_text_size"
             android:textColor="#FF33B5E5"
             android:textStyle="bold"/>
 
     </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
